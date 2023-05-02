@@ -47,7 +47,7 @@ public class User {
     // Relacion con la tabla Services
     @JsonIgnoreProperties({"user","hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Service> services;
+    private List<Servicio> services;
 
     // Relacion con la tabla Courses
     @JsonIgnoreProperties({"users","hibernateLazyInitializer", "handler"})

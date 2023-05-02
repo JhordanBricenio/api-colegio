@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.util.Date;
+
 @Entity
 @Data
 @Table(name = "events")
@@ -20,12 +22,12 @@ public class Event {
     private String image;
     @NotBlank(message = "La fecha es obligatorio")
     @Column(nullable = false)
-    private String date;
-    private String time;
+    private Date date;
+    private Date time;
     @NotBlank(message = "El lugar es obligatorio")
     @Column(nullable = false)
     private String place;
     private String link;
     private String status;
-    private String created_at;
+    private Date created_at;
 }

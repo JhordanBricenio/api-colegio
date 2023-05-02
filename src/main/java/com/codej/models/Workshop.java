@@ -1,5 +1,6 @@
 package com.codej.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -21,6 +22,8 @@ public class Workshop {
     private Integer hours;
     private String photo;
 
+
+    @JsonIgnoreProperties({"workshops","hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id")
     private User user;
