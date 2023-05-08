@@ -19,6 +19,8 @@ public class Degree {
     @Column(nullable = false)
     private String name;
     private String description;
+    private String color;
+    private String icon;
 
     //Relacion con course
     @JsonIgnoreProperties({"degrees","hibernateLazyInitializer", "handler"})
