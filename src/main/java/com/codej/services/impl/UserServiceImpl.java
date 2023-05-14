@@ -42,7 +42,7 @@ public class UserServiceImpl implements IUserService {
             response.put("error", e.getMessage());
             return ResponseEntity.badRequest().body(response);
         }
-        response.put("mensaje", "El usurio ha sido creado con éxito");
+        response.put("mensaje", "El usuario ha sido creado con éxito");
         response.put("usuario", userNew);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
