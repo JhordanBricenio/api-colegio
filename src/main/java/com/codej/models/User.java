@@ -63,6 +63,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "workshop_id"))
     private List<Workshop> workshops;
 
+    @JsonIgnoreProperties({"users","hibernateLazyInitializer", "handler"})
+    @OneToMany(mappedBy = "user")
+    private List<Asistencia> asistencias;
+
 
     public void  agregarRol(Role rol){
         if (roles == null){

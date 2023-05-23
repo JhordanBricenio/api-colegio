@@ -57,7 +57,7 @@ public class EventServiceImpl implements IEventService {
         eventUpdate.setLink(event.getLink());
         eventUpdate.setPlace(event.getPlace());
         eventUpdate.setStatus(event.getStatus());
-        eventUpdate.setTime(event.getTime());
+       // eventUpdate.setTime(event.getTime());
         return eventRepository.save(event);
     }
 

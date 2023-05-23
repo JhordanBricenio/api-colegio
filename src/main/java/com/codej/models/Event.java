@@ -20,14 +20,29 @@ public class Event {
     private String name;
     private String description;
     private String image;
-    @NotBlank(message = "La fecha es obligatorio")
-    @Column(nullable = false)
+
+    @Temporal(TemporalType.DATE)
+    //@NotBlank(message = "La fecha es obligatorio")
+    //@Column(nullable = false)
     private Date date;
-    private Date time;
+    //private Date time;
     @NotBlank(message = "El lugar es obligatorio")
     @Column(nullable = false)
     private String place;
     private String link;
     private String status;
+
+    @Temporal(TemporalType.DATE)
     private Date created_at;
+
+    @PrePersist
+    public void prePersist(){
+        this.created_at = new Date();
+    }
+
+
+
+
+
+
 }
