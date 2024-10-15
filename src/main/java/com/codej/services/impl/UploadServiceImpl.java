@@ -23,7 +23,7 @@ public class UploadServiceImpl implements IUploadService {
         Resource recurso= new UrlResource(rutaArchivo.toUri());
 
         if(!recurso.exists() && !recurso.isReadable()){
-            rutaArchivo= Paths.get("/opt/uploads/").resolve("nofoto.jpg").toAbsolutePath();
+            rutaArchivo= Paths.get("src/main/resources/static/images").resolve("notImage.png").toAbsolutePath();
             recurso= new UrlResource(rutaArchivo.toUri());
         }
         return  recurso;
@@ -41,7 +41,7 @@ public class UploadServiceImpl implements IUploadService {
     @Override
     public boolean eliminar(String nombreFoto) {
         if(nombreFoto!=null && nombreFoto.length()>0){
-            Path rutaFotoAnterior=Paths.get("/opt/uploads/").resolve(nombreFoto).toAbsolutePath();
+            Path rutaFotoAnterior=Paths.get("uploads/").resolve(nombreFoto).toAbsolutePath();
             File archivoFotoAnterior= rutaFotoAnterior.toFile();
             if(archivoFotoAnterior.exists() &&archivoFotoAnterior.canRead()){
                 archivoFotoAnterior.delete();

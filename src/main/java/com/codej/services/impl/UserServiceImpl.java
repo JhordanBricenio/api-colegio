@@ -38,13 +38,13 @@ public class UserServiceImpl implements IUserService {
         try {
             userNew = userRepository.save(user);
         }catch (Exception e){
-            response.put("mensaje", "Error al crear el usuario");
+            response.put("message", "error creating the user");
             response.put("error", e.getMessage());
             return ResponseEntity.badRequest().body(response);
         }
-        response.put("mensaje", "El usuario ha sido creado con éxito");
-        response.put("usuario", userNew);
-        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+        response.put("message", "User created successfully");
+        response.put("user", userNew);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @Override

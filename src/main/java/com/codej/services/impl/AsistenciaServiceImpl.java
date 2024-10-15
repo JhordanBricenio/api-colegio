@@ -1,10 +1,13 @@
 package com.codej.services.impl;
 
-import com.codej.models.Asistencia;
+import com.codej.controller.dto.AssistanceDetailDTO;
+import com.codej.controller.dto.AssistanceRequestDTO;
+import com.codej.models.Assistance;
+import com.codej.models.User;
 import com.codej.repositories.IAsistenciaRepository;
+import com.codej.repositories.IUserRepository;
 import com.codej.services.IAsistenciaService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -16,32 +19,44 @@ public class AsistenciaServiceImpl implements IAsistenciaService {
 
     private final IAsistenciaRepository asistenciaRepository;
 
+    private final IUserRepository userRepository;
+
     @Override
-    public List<Asistencia> findAll() {
+    public List<Assistance> findAll() {
         return asistenciaRepository.findAll();
     }
 
     @Override
-    public Asistencia findById(Long id) {
+    public Assistance findById(Long id) {
         return asistenciaRepository.findById(id).orElse(null);
     }
 
     @Override
-    public ResponseEntity<?> save(List<Asistencia> asistencias) {
-        List<Asistencia> asistenciasGuardadas = asistenciaRepository.saveAll(asistencias);
+    public void save(AssistanceRequestDTO assistanceRequest) {
 
-        if (asistenciasGuardadas.isEmpty()) {
-            return ResponseEntity.badRequest().body("Error al guardar las asistencias");
+        for (AssistanceDetailDTO detail : assistanceRequest.getAssistanceDetailDTOS()) {
+            Assistance asistencia = new Assistance();
+            //asistencia.setDate(date);
+            asistencia.setStatusAssistance(detail.getStatusAssistance());
+            asistencia.setComments(detail.getComments());
+
+            // Buscar al estudiante por ID
+            User estudiante = userRepository.findById(detail.getStudentId())
+                    .orElseThrow(
+                            () -> new RuntimeException("Estudiante no encontrado con ID: "
+                                    + detail.getStudentId()));
+            asistencia.setUser(estudiante);
+
+            // Guardar la asistencia en la base de datos
+            asistenciaRepository.save(asistencia);
         }
-
-        return ResponseEntity.ok("Asistencias registradas exitosamente");
     }
 
     @Override
-    public Asistencia update(Asistencia asistencia, Long id) {
-        Asistencia asistencia1= findById(id);
-        asistencia1.setFecha(new Date());
-        asistencia1.setPresente(asistencia.getPresente());
+    public Assistance update(Assistance asistencia, Long id) {
+        Assistance asistencia1= findById(id);
+        asistencia1.setDate(new Date());
+        //asistencia1.setPresente(asistencia.getPresente());
         asistencia1.setUser(asistencia.getUser());
         return asistenciaRepository.save(asistencia1);
     }

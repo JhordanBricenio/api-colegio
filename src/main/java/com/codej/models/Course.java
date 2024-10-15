@@ -26,10 +26,10 @@ public class Course {
     private Integer semester;
     private String photo;
 
-    //Relacion con course
+    /*//Relacion con course
     @JsonIgnoreProperties({"courses","hibernateLazyInitializer", "handler"})
     @ManyToMany(mappedBy = "courses")
-    private List<User> users;
+    private List<User> users;*/
 
     //Relacion con degree
     @JsonIgnoreProperties({"courses","hibernateLazyInitializer", "handler"})

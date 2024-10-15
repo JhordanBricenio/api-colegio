@@ -1,14 +1,14 @@
 package com.codej.services;
 
-import com.codej.models.Asistencia;
-import org.springframework.http.ResponseEntity;
+import com.codej.controller.dto.AssistanceRequestDTO;
+import com.codej.models.Assistance;
 
 import java.util.List;
 
 public interface IAsistenciaService {
-    public List<Asistencia> findAll();
-    public Asistencia findById(Long id);
-    public  ResponseEntity<?> save (List<Asistencia> asistencias);
-    public Asistencia update(Asistencia asistencia, Long id);
+    public List<Assistance> findAll();
+    public Assistance findById(Long id);
+    public  void save (AssistanceRequestDTO assistanceRequest);
+    public Assistance update(Assistance asistencia, Long id);
     public void delete(Long id);
 }
