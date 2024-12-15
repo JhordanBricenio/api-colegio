@@ -1,8 +1,10 @@
 package com.codej.services;
 
 import com.codej.controller.dto.RegistrationDTO;
+import com.codej.controller.dto.UserDTO;
 import com.codej.models.Registration;
 
+import com.codej.models.User;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -17,4 +19,6 @@ public interface IRegistrationService {
      RegistrationDTO findRegistrationByDni(String dni);
 
 
+     List<UserDTO>obtenerEstudiantesPorGrado(Integer id);
+     List<UserDTO>findAlumnosByCursoId(Integer id);
 }

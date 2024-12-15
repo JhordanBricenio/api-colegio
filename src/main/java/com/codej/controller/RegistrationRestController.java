@@ -2,7 +2,9 @@ package com.codej.controller;
 
 
 import com.codej.controller.dto.RegistrationDTO;
+import com.codej.controller.dto.UserDTO;
 import com.codej.models.Registration;
+import com.codej.models.User;
 import com.codej.services.IRegistrationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +33,18 @@ public class RegistrationRestController {
     @GetMapping("/registration/getByDni/{dni}")
     public RegistrationDTO findRegistrationByDni(@PathVariable String dni){
         return licenseService.findRegistrationByDni(dni);
+    }
+
+    @GetMapping("/degree/{degreeId}/students")
+    public ResponseEntity<List<UserDTO>> obtenerEstudiantesPorGrado(@PathVariable Integer degreeId) {
+        List<UserDTO> estudiantes = licenseService.obtenerEstudiantesPorGrado(degreeId);
+        return ResponseEntity.ok(estudiantes);
+    }
+
+    @GetMapping("/degree/{cursoId}/alumnos")
+    public ResponseEntity<List<UserDTO>> findAlumnosByCursoId(@PathVariable Integer cursoId) {
+        List<UserDTO> estudiantes = licenseService.findAlumnosByCursoId(cursoId);
+        return ResponseEntity.ok(estudiantes);
     }
 
 

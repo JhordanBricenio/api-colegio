@@ -3,6 +3,7 @@ package com.codej.services.impl;
 import com.codej.controller.dto.RegistrationDTO;
 import com.codej.controller.dto.UserDTO;
 import com.codej.models.Registration;
+import com.codej.models.User;
 import com.codej.repositories.IRegistrationRepository;
 import com.codej.repositories.IUserRepository;
 import com.codej.services.IRegistrationService;
@@ -97,5 +98,14 @@ public class LicenseServiceImpl implements IRegistrationService {
         matriculaDTO.setUserDTO(usuarioDTO);
 
         return matriculaDTO;
+    }
+
+    public List<UserDTO> obtenerEstudiantesPorGrado(Integer gradoId) {
+        return licenseRepository.findUsersByDegreeId(gradoId);
+    }
+
+    @Override
+    public List<UserDTO> findAlumnosByCursoId(Integer id) {
+        return licenseRepository.findAlumnosByCursoId(id);
     }
 }
