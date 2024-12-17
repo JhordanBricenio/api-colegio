@@ -1,8 +1,8 @@
 package com.codej.controller;
 
 import com.codej.controller.dto.AssistanceRequestDTO;
-import com.codej.models.Assistance;
-import com.codej.services.IAsistenciaService;
+import com.codej.model.Assistance;
+import com.codej.service.IAsistenciaService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

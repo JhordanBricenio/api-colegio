@@ -1,7 +1,7 @@
 package com.codej.controller;
 
-import com.codej.models.Note;
-import com.codej.services.INoteService;
+import com.codej.model.Note;
+import com.codej.service.INoteService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

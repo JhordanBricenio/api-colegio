@@ -1,7 +1,7 @@
 package com.codej.controller;
 
-import com.codej.models.Workshop;
-import com.codej.services.IWorkshopService;
+import com.codej.model.Workshop;
+import com.codej.service.IWorkshopService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

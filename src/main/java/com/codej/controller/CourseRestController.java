@@ -1,7 +1,7 @@
 package com.codej.controller;
 
-import com.codej.models.Course;
-import com.codej.services.ICourseService;
+import com.codej.model.Course;
+import com.codej.service.ICourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

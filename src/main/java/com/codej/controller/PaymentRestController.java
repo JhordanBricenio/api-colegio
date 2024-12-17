@@ -1,8 +1,8 @@
 package com.codej.controller;
 
 
-import com.codej.models.Payment;
-import com.codej.services.IPaymentService;
+import com.codej.model.Payment;
+import com.codej.service.IPaymentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

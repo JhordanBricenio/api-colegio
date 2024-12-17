@@ -1,7 +1,7 @@
 package com.codej.controller;
 
-import com.codej.models.Degree;
-import com.codej.services.IDegreeService;
+import com.codej.model.Degree;
+import com.codej.service.IDegreeService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,8 +1,8 @@
 package com.codej.controller;
 
-import com.codej.models.User;
-import com.codej.services.IUploadService;
-import com.codej.services.IUserService;
+import com.codej.model.User;
+import com.codej.service.IUploadService;
+import com.codej.service.IUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -32,7 +33,7 @@ public class UserRestController {
     }
 
     @GetMapping("/user/{id}")
-    public User getId(@PathVariable Integer id){
+    public User getId(@PathVariable UUID id){
         return userService.findById(id);
     }
     @PutMapping("/user/{id}")
@@ -41,12 +42,12 @@ public class UserRestController {
     }
 
     @DeleteMapping("/user/{id}")
-    public void delete(@PathVariable Integer id){
+    public void delete(@PathVariable UUID id){
         userService.delete(id);
     }
 
     @PostMapping("/user/upload")
-    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile archivo, @RequestParam("id") Integer id) {
+    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile archivo, @RequestParam("id") UUID id) {
         Map<String, Object> response = new HashMap<>();
         User user = userService.findById(id);
         if(!archivo.isEmpty()){

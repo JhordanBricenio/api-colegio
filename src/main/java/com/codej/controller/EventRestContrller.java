@@ -1,8 +1,8 @@
 package com.codej.controller;
 
-import com.codej.models.Event;
-import com.codej.services.IEventService;
-import com.codej.services.IUploadService;
+import com.codej.model.Event;
+import com.codej.service.IEventService;
+import com.codej.service.IUploadService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

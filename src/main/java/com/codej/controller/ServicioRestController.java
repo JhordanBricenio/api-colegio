@@ -1,8 +1,8 @@
 package com.codej.controller;
 
 
-import com.codej.models.Servicio;
-import com.codej.services.IServiService;
+import com.codej.model.Servicio;
+import com.codej.service.IServiService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
