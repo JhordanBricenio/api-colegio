@@ -27,7 +27,7 @@ public interface PostMapper {
             return null;
         }
         User user = new User();
-        user.setId(idUser);
+        user.setIdUser(idUser);
         return user;
     }
 
@@ -35,7 +35,7 @@ public interface PostMapper {
         if (user == null) {
             return null;
         }
-        return user.getId();
+        return user.getIdUser();
     }
 
 

@@ -9,4 +9,6 @@ public interface IUserService extends ICRUDService<User, UUID> {
 
     User saveUser(User user) throws  Exception;
 
+    User findByDni(String dni) throws Exception;
+
 }

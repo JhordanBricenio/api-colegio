@@ -41,6 +41,10 @@ public class UserController {
     public ResponseEntity<UserDTO> findById(@PathVariable UUID id) throws Exception {
         return ResponseEntity.ok(userMapper.toUserDTO(userService.findById(id)));
     }
+    @GetMapping("/dni/{dni}")
+    public ResponseEntity<UserDTO> findByDni(@PathVariable String dni) throws Exception {
+        return ResponseEntity.ok(userMapper.toUserDTO(userService.findByDni(dni)));
+    }
 
     @PutMapping(ID_IN_PATH)
     public ResponseEntity<UserDTO> update(@Valid @RequestBody UserDTO userDTO,@PathVariable UUID id) throws Exception {

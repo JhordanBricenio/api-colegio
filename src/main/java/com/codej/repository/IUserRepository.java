@@ -9,4 +9,5 @@ public interface IUserRepository extends IGenericRepository<User, UUID> {
 
     boolean existsByEmail(String email);
     boolean existsByDni(String dni);
+    User findByDni(String dni);
 }

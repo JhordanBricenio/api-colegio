@@ -2,6 +2,7 @@ package com.codej.service.impl;
 
 
 import com.codej.exceptions.DuplicateResourceException;
+import com.codej.exceptions.ResourceNotFoundException;
 import com.codej.model.User;
 import com.codej.repository.IGenericRepository;
 import com.codej.repository.IUserRepository;
@@ -36,5 +37,12 @@ public class UserServiceImpl extends CRUDGenericImpl<User, UUID> implements IUse
         return userRepository.save(user);
     }
 
+    @Override
+    public User findByDni(String dni) throws Exception {
+        if (!userRepository.existsByDni(dni)) {
+            throw new ResourceNotFoundException("No existe un usuario con el dni: " + dni);
+        }
+        return userRepository.findByDni(dni);
+    }
 
 }

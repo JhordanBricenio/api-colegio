@@ -18,7 +18,7 @@ import java.util.UUID;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private UUID idUser;
 
     @Column(name = "name", nullable = false, length = 50)
     private String name;
@@ -53,6 +53,16 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Post> posts;
+
+    @JsonIgnoreProperties({"users","hibernateLazyInitializer", "handler"})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_workshop",
+            joinColumns = @JoinColumn(name = "id_user", referencedColumnName = "idUser"),
+            inverseJoinColumns = @JoinColumn(name = "id_workshop", referencedColumnName = "idWorkshop")
+    )
+    private List<Workshop> workshops;
+
 
     @JsonIgnoreProperties({"users","hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "user" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)

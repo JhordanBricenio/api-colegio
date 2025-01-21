@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-import static com.codej.constants.ApiConstants.ID_IN_PATH;
-import static com.codej.constants.ApiConstants.TAG_BASE;
+import static com.codej.constants.ApiConstants.*;
 
 @RestController
 @RequestMapping(TAG_BASE)
