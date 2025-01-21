@@ -5,21 +5,11 @@ public final class ApiConstants {
     private ApiConstants() {}
 
     public static final String API_BASE = "/api";
+    public static final String USER_BASE = API_BASE + "/users";
+    public static final String TAG_BASE = API_BASE + "/tags";
+    public static final String POST_BASE = API_BASE + "/posts";
+    public static final String ID_IN_PATH = "/{id}";
 
-    public static final class Post {
-        public static final String BASE = API_BASE + "/post";
-        public static final String PAGE = "/page/{page}";
-        public  static final String IN_ID_PATH = "/{id}";
-    }
 
-    public static final class Tag {
-        public static final String BASE = API_BASE + "/tag";
-        public  static final String IN_ID_PATH = "/{id}";
-    }
-
-    public static final class User {
-        public static final String BASE = API_BASE + "/user";
-        public static final String LOGIN = "/login";
-    }
 
 }

@@ -23,8 +23,8 @@ public class Workshop {
     private String photo;
 
 
-    @JsonIgnoreProperties({"workshops","hibernateLazyInitializer", "handler"})
+ /*   @JsonIgnoreProperties({"workshops","hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id")
-    private User user;
+    private User user;*/
 }

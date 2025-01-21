@@ -1,54 +1,59 @@
 package com.codej.controller;
 
-import com.codej.constants.ApiConstants;
+
+import com.codej.dto.PostDTO;
+import com.codej.mapper.PostMapper;
 import com.codej.model.Post;
 import com.codej.service.IPostService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
+import static com.codej.constants.ApiConstants.*;
 
 @RestController
+@RequestMapping(POST_BASE)
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping(ApiConstants.Post.BASE)
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class PostController {
 
-    private final IPostService blogService;
+    private final IPostService postService;
+    private final PostMapper postMapper;
+
 
     @GetMapping
-    public List<Post> findAll() {
-        return blogService.findAll();
+    public ResponseEntity< List<PostDTO>> findAll() throws Exception {
+        postMapper.toPostDTOList(postService.findAll());
+        return ResponseEntity.ok(postMapper.toPostDTOList(postService.findAll()));
     }
-
-    @GetMapping(ApiConstants.Post.PAGE)
-    public Page<Post> index(@PathVariable int page) {
-        Pageable pageable = PageRequest.of(page, 9);
-        return blogService.findAll(pageable);
-    }
-
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody Post post) {
-        return blogService.save(post);
+    public ResponseEntity<PostDTO> save(@Valid @RequestBody PostDTO postDTO) throws Exception {
+        Post post= postMapper.toPostEntity(postDTO);
+        Post savedPost = postService.save(post);
+        return ResponseEntity.status(HttpStatus.CREATED).body(postMapper.toPostDTO(savedPost));
+    }
+    @GetMapping(ID_IN_PATH)
+    public ResponseEntity<PostDTO> findById(@PathVariable UUID id) throws Exception {
+        return ResponseEntity.ok(postMapper.toPostDTO(postService.findById(id)));
     }
 
-    @GetMapping(ApiConstants.Post.IN_ID_PATH)
-    public Post findById(@PathVariable UUID id) {
-        return blogService.findById(id);
+    @PutMapping(ID_IN_PATH)
+    public ResponseEntity<PostDTO> update(@Valid @RequestBody PostDTO postDTO,@PathVariable UUID id) throws Exception {
+        Post post = postMapper.toPostEntity(postDTO);
+        Post updatedPost = postService.update(post, id);
+        return ResponseEntity.ok(postMapper.toPostDTO(updatedPost));
+    }
+    @DeleteMapping(ID_IN_PATH)
+    public ResponseEntity<Void> delete(@PathVariable UUID id) throws Exception {
+        postService.delete(id);
+        return  ResponseEntity.noContent().build();
     }
 
-    @PutMapping(ApiConstants.Post.IN_ID_PATH)
-    public Post update(@RequestBody Post post, @PathVariable UUID id) {
-        return blogService.update(post, id);
-    }
-    @DeleteMapping("/blog/{id}")
-    public void delete(@PathVariable UUID id){
-        blogService.delete(id);
-    }
+
+
 }

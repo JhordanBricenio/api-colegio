@@ -22,10 +22,10 @@ public class Payment {
     private String status;
     private String date;
 
-    // Relacion con la tabla User
+/*    // Relacion con la tabla User
     @JsonIgnoreProperties({"payments","hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private User user;*/
 
 }

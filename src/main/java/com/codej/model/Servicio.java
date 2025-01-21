@@ -18,9 +18,9 @@ public class Servicio {
     private String description;
     private String image;
 
-    // Relacion con la tabla user
+/*    // Relacion con la tabla user
     @JsonIgnoreProperties({"services","hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private User user;*/
 }

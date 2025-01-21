@@ -2,22 +2,41 @@ package com.codej.mapper;
 
 import com.codej.dto.PostDTO;
 import com.codej.model.Post;
+import com.codej.model.User;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
+import java.util.UUID;
 
 @Mapper(componentModel = "spring")
 public interface PostMapper {
 
-   /* PostDTO toPostDTO(Post post);
+    @Mapping(target = "idUser", source = "user")
+   PostDTO toPostDTO(Post post);
 
+    @Mapping(target = "user" , source = "idUser")
     Post toPostEntity(PostDTO postDTO);
 
-    List<PostDTO> toPostDTOList(List<Post> posts);*/
+    List<PostDTO> toPostDTOList(List<Post> posts);
 
-/*    @Mapping(target = "posts", ignore = true) // Evitar bucle infinito
-    TagDTO toTagDTO(Tag tag);
 
-    @Mapping(target = "posts", ignore = true) // Evitar bucle infinito
-    Tag toTag(TagDTO tagDTO);*/
+
+    default User map(UUID idUser) {
+        if (idUser == null) {
+            return null;
+        }
+        User user = new User();
+        user.setId(idUser);
+        return user;
+    }
+
+    default UUID map(User user) {
+        if (user == null) {
+            return null;
+        }
+        return user.getId();
+    }
+
+
 }
