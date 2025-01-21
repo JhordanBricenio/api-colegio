@@ -28,7 +28,6 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity< List<PostDTO>> findAll() throws Exception {
-        postMapper.toPostDTOList(postService.findAll());
         return ResponseEntity.ok(postMapper.toPostDTOList(postService.findAll()));
     }
     @PostMapping

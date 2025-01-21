@@ -13,9 +13,9 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class WorkshopDTO {
+public class ServiceDTO {
 
-    private UUID idWorkshop;
+    private UUID idServices;
 
     @NotNull
     private String name;
@@ -24,17 +24,9 @@ public class WorkshopDTO {
     private String description;
 
     @NotNull
-    private Integer hours;
-
-    private String photo;
+    private String image;
 
     private LocalDateTime creationDate;
-
-    @NotNull
-    private LocalDateTime startDate;
-
-    @NotNull
-    private LocalDateTime endDate;
-
+    
     private UserDTO user;
 }

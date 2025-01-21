@@ -63,8 +63,12 @@ public class User {
     )
     private List<Workshop> workshops;
 
+    @JsonIgnoreProperties({"user","hibernateLazyInitializer", "handler"})
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Services> services;
 
-    @JsonIgnoreProperties({"users","hibernateLazyInitializer", "handler"})
+
+    @JsonIgnoreProperties({"user","hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "user" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Assistance> assistance;
 
