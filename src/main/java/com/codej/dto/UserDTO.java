@@ -1,5 +1,6 @@
 package com.codej.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -28,6 +29,7 @@ public class UserDTO {
     private String email;
 
     @NotNull
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @NotNull

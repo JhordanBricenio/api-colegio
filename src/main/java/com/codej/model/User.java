@@ -36,7 +36,6 @@ public class User {
 
     @Column(name = "password", length = 60, nullable = false)
     @Size(min = 8)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Column(name = "phone", length = 12, nullable = false)
