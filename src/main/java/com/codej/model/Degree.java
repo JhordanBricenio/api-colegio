@@ -2,7 +2,6 @@ package com.codej.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.util.List;
@@ -14,17 +13,18 @@ public class Degree {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @NotBlank(message = "El nombre es obligatorio")
-    @Column(nullable = false)
+    private Integer idDegree;
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
     private String description;
-    private String color;
-    private String icon;
 
-    //Relacion con course
     @JsonIgnoreProperties({"degrees","hibernateLazyInitializer", "handler"})
-    @ManyToMany(mappedBy = "degrees")
+    @ManyToMany
+    @JoinTable(
+            name = "course_degree",
+            joinColumns = @JoinColumn(name = "degree_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
     private List<Course> courses;
 
 
