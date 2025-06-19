@@ -33,9 +33,14 @@ public class DegreeServiceImpl extends CRUDGenericImpl<Degree, Integer> implemen
                 ()-> new ResourceNotFoundException(NOT_RESULTS_FOUND_FOR_WITH_ID+ idDegree));
 
         for (DegreeCourseDTO courseDTO : courses) {
-            Course course = new Course();
-            course.setIdCourse(courseDTO.getCourseId());
-            degree.getCourses().add(course);
+            boolean exists = degree.getCourses()
+                    .stream()
+                    .anyMatch(c -> c.getIdCourse().equals(courseDTO.getCourseId()));
+            if (!exists) {
+                Course course = new Course();
+                course.setIdCourse(courseDTO.getCourseId());
+                degree.getCourses().add(course);
+            }
         }
         return degreeRepository.save(degree);
     }
