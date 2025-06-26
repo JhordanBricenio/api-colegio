@@ -25,6 +25,9 @@ public class UserDTO {
     private String dni;
 
     @NotNull
+    private String birthDate;
+
+    @NotNull
     @Email
     private String email;
 

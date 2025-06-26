@@ -70,7 +70,6 @@ public class UserController {
 
     @GetMapping("/dni/{numero}")
     public ResponseEntity<String> buscarPorDni(@PathVariable String numero) {
-        log.info("Buscando DNI: {}", numero);
         String url = "https://api.apis.net.pe/v2/reniec/dni?numero=" + numero;
 
         RestTemplate restTemplate = new RestTemplate();
