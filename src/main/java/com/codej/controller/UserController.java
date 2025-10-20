@@ -7,7 +7,6 @@ import com.codej.mapper.UserMapper;
 import com.codej.model.User;
 import com.codej.service.IUserService;
 import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,6 @@ import static com.codej.constants.ApiConstants.*;
 @RestController
 @RequestMapping(USER_BASE)
 @CrossOrigin(origins = "http://localhost:4200")
-@Slf4j
 public class UserController {
 
     private final IUserService userService;
@@ -52,7 +50,6 @@ public class UserController {
     }
     @PostMapping("/dni")
     public ResponseEntity<UserDTO> findByDni(@RequestBody DniRequest dniRequest) throws Exception {
-        log.info("dni: {}", dniRequest);
         return ResponseEntity.ok(userMapper.toUserDTO(userService.findByDni(dniRequest.getDni())));
     }
 

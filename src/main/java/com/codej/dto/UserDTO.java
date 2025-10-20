@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 
@@ -24,8 +25,8 @@ public class UserDTO {
     @NotNull
     private String dni;
 
-    @NotNull
-    private String birthDate;
+   @NotNull
+    private LocalDate birthDate;
 
     @NotNull
     @Email

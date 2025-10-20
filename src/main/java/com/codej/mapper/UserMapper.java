@@ -12,6 +12,7 @@ public interface UserMapper {
     // UserDTO to User
     @Mapping(target = "sex", source = "sex")
     User toUserEntity(UserDTO userDTO);
+
     // User to UserDTO
     @Mapping(target = "sex", source = "sex")
     UserDTO toUserDTO(User user);
