@@ -1,5 +1,6 @@
 package com.codej.dto;
 
+import com.codej.model.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -7,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 
@@ -32,7 +34,6 @@ public class UserDTO {
     @Email
     private String email;
 
-    @NotNull
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
@@ -45,5 +46,10 @@ public class UserDTO {
     private String photo;
 
     @NotNull
-    private String sex;
+    private String gender;
+
+    private LocalDateTime createdAt;
+
+    @NotNull
+    private String rolId;
 }

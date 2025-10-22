@@ -1,21 +1,25 @@
 package com.codej.model;
 
-import com.codej.emuns.Sex;
+import com.codej.emuns.Gender;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "users")
+@EntityListeners(AuditingEntityListener.class)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -52,9 +56,17 @@ public class User {
     private String photo;
 
     @Column(name = "sex", length = 10, nullable = false)
-    private Sex sex;
+    private Gender gender;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @CreatedDate
+    @Column(name = "created_at",updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+ /*   @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Post> posts;
 
     @JsonIgnoreProperties({"users","hibernateLazyInitializer", "handler"})
@@ -73,6 +85,11 @@ public class User {
 
     @JsonIgnoreProperties({"user","hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "user" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Assistance> assistance;
+    private List<Assistance> assistance;*/
+
+    @JsonIgnoreProperties({"users","hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rol_id", nullable = false)
+    private Role role;
 
 }

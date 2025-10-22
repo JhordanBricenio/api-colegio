@@ -10,11 +10,11 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
     // UserDTO to User
-    @Mapping(target = "sex", source = "sex")
+    @Mapping(target = "role.idRole", source = "rolId")
     User toUserEntity(UserDTO userDTO);
 
     // User to UserDTO
-    @Mapping(target = "sex", source = "sex")
+    @Mapping(target = "rolId", source = "role.idRole")
     UserDTO toUserDTO(User user);
 
 

@@ -1,6 +1,6 @@
 package com.codej.emuns;
 
-public enum Sex {
+public enum Gender {
     MASCULINO,
     FEMENINO,
     OTRO

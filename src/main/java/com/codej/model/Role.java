@@ -3,6 +3,7 @@ package com.codej.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -22,4 +23,7 @@ public class Role {
 
     @Column(name = "status", nullable = false)
     private boolean status;
+
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<User> users;
 }

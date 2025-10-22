@@ -40,7 +40,6 @@ public class RoleController {
         Role role= roleMapper.mapOut(roleDTO);
         if (role.getName() != null) {
             role.setName(role.getName().toUpperCase());
-            role.setStatus(true);
         }
         Role savedRole = roleService.save(role);
         return ResponseEntity.status(HttpStatus.CREATED).body(roleMapper.mapIn(savedRole));

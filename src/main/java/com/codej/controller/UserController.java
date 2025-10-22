@@ -7,15 +7,18 @@ import com.codej.mapper.UserMapper;
 import com.codej.model.User;
 import com.codej.service.IUserService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.UUID;
 
-import static com.codej.constants.ApiConstants.*;
+import static com.codej.constants.ApiConstants.ID_IN_PATH;
+import static com.codej.constants.ApiConstants.USER_BASE;
 
 @RestController
 @RequestMapping(USER_BASE)
@@ -29,18 +32,23 @@ public class UserController {
         this.userService = userService;
         this.userMapper = userMapper;
     }
-
-    @Value("${apis.token}")
-    private  String apiToken;
-
     @GetMapping
     public ResponseEntity< List<UserDTO>> findAll() throws Exception {
         userMapper.toUserDTOList(userService.findAll());
         return ResponseEntity.ok(userMapper.toUserDTOList(userService.findAll()));
     }
+
+    @GetMapping("/paged/{page}")
+    public Page< UserDTO> findAllPaged(@PathVariable Integer page) throws Exception {
+        Pageable pageable = PageRequest.of(page, 8);
+        Page<User> userPage = userService.findAllPaged(pageable);
+        return userPage.map(userMapper::toUserDTO);
+    }
+
     @PostMapping
     public ResponseEntity<UserDTO> save(@Valid @RequestBody UserDTO userDTO) throws Exception {
         User user= userMapper.toUserEntity(userDTO);
+        user.setPassword(userDTO.getDni());
         User savedUser = userService.saveUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(userMapper.toUserDTO(savedUser));
     }
@@ -53,9 +61,10 @@ public class UserController {
         return ResponseEntity.ok(userMapper.toUserDTO(userService.findByDni(dniRequest.getDni())));
     }
 
-    @PutMapping(ID_IN_PATH)
+    @PatchMapping(ID_IN_PATH)
     public ResponseEntity<UserDTO> update(@Valid @RequestBody UserDTO userDTO,@PathVariable UUID id) throws Exception {
         User user = userMapper.toUserEntity(userDTO);
+        user.setPassword(userDTO.getDni());
         User updatedUser = userService.update(user, id);
         return ResponseEntity.ok(userMapper.toUserDTO(updatedUser));
     }
@@ -66,24 +75,8 @@ public class UserController {
     }
 
     @GetMapping("/dni/{numero}")
-    public ResponseEntity<String> buscarPorDni(@PathVariable String numero) {
-        String url = "https://api.apis.net.pe/v2/reniec/dni?numero=" + numero;
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + apiToken);
-
-        HttpEntity<Void> entity = new HttpEntity<>(headers);
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                entity,
-                String.class
-        );
-
-        return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
+    public ResponseEntity<String> searchByDni(@PathVariable String numero) throws Exception {
+       return userService.searchByDni(numero);
     }
 
 
