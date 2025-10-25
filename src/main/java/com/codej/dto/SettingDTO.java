@@ -7,27 +7,30 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostDTO {
+public class SettingDTO {
 
-    private UUID idPost;
+    private UUID idSetting;
 
     @NotNull
-    private String title;
-    @NotNull
-    private String content;
-    @NotNull
-    private String image;
-    @NotNull
-    private LocalDateTime date;
+    private String name;
 
-    private UUID idUser;
+    private String logo;
 
-    private List<TagDTO> tags;
+    @NotNull
+    private String address;
+
+    @NotNull
+    private String phone;
+
+    private String email;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
 }

@@ -24,6 +24,6 @@ public class Role {
     @Column(name = "status", nullable = false)
     private boolean status;
 
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
     private List<User> users;
 }
