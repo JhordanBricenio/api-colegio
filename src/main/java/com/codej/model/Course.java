@@ -18,15 +18,4 @@ public class Course {
     private String name;
     private String description;
 
-
-    @ManyToMany(mappedBy = "courses")
-    private List<Degree> degrees;
-
-
-
-
-
-
-
-
 }

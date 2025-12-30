@@ -1,33 +1,43 @@
 package com.codej.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Data
 @Table(name = "degrees")
+@EntityListeners(AuditingEntityListener.class)
 public class Degree {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idDegree;
-    @Column(name = "name", nullable = false, length = 50)
-    private String name;
-    private String description;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID idDegree;
 
-    @JsonIgnoreProperties({"degrees","hibernateLazyInitializer", "handler"})
-    @ManyToMany
-    @JoinTable(
-            name = "course_degree",
-            joinColumns = @JoinColumn(name = "degree_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
-    private List<Course> courses;
+    @Column(name = "course", nullable = false, length = 50)
+    private String course;
 
+    @Column(name = "section", nullable = false, length = 50)
+    private String section;
 
+    @Column(name = "status", nullable = false)
+    private boolean status;
 
+    @CreatedDate
+    @Column(name = "created_at",updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "education_level_id", nullable = false)
+    private EducationLevel educationLevel;
 
 }

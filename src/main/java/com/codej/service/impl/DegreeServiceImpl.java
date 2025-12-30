@@ -13,21 +13,22 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static com.codej.constants.ErrorMessageConstants.NOT_RESULTS_FOUND_FOR_WITH_ID;
 
 @Service
 @RequiredArgsConstructor
-public class DegreeServiceImpl extends CRUDGenericImpl<Degree, Integer> implements IDegreeService {
+public class DegreeServiceImpl extends CRUDGenericImpl<Degree, UUID> implements IDegreeService {
 
     private final IDegreeRepository degreeRepository;
 
     @Override
-    protected IGenericRepository<Degree, Integer> getRepository() {
+    protected IGenericRepository<Degree, UUID> getRepository() {
         return degreeRepository;
     }
 
-    @Override
+   /* @Override
     public Degree assignCourseToDegree(Integer idDegree, List<DegreeCourseDTO> courses) throws Exception {
         Degree degree = degreeRepository.findById(idDegree).orElseThrow(
                 ()-> new ResourceNotFoundException(NOT_RESULTS_FOUND_FOR_WITH_ID+ idDegree));
@@ -53,7 +54,7 @@ public class DegreeServiceImpl extends CRUDGenericImpl<Degree, Integer> implemen
         List<Course> courses = new ArrayList<>(degree.getCourses());
 
         return new DegreeWithCourseDTO(degree.getIdDegree(), degree.getName(),courses);
-    }
+    }*/
 
 
 }

@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.codej.constants.ApiConstants.*;
 
@@ -39,33 +40,33 @@ public class DegreeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(degreeMapper.mapIn(savedDegree));
     }
 
-    @PostMapping(ASSIGN_COURSE_TO_DEGREE)
+  /*  @PostMapping(ASSIGN_COURSE_TO_DEGREE)
     public ResponseEntity<?> assignCourseToDegree(@PathVariable Integer idDegree,
                                                   @RequestBody List<DegreeCourseDTO> degreeCourseDTO) throws Exception {
         degreeService.assignCourseToDegree(idDegree, degreeCourseDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
+    }*/
 
     @GetMapping(ID_IN_PATH)
-    public ResponseEntity<DegreeDTO> findById(@PathVariable Integer id) throws Exception {
+    public ResponseEntity<DegreeDTO> findById(@PathVariable UUID id) throws Exception {
         return ResponseEntity.ok(degreeMapper.mapIn(degreeService.findById(id)));
     }
 
-    @GetMapping("/withCourses/{idDegree}")
+ /*   @GetMapping("/withCourses/{idDegree}")
     public ResponseEntity<?> findDegreeWithCourses(@PathVariable Integer idDegree) throws Exception {
         DegreeWithCourseDTO degreeWithCourseDTO = degreeService.findDegreeWithCourses(idDegree);
         return ResponseEntity.ok(degreeWithCourseDTO);
-    }
+    }*/
 
     @PutMapping(ID_IN_PATH)
-    public ResponseEntity<DegreeDTO> update(@Valid @RequestBody DegreeDTO degreeDTO,@PathVariable Integer id)
+    public ResponseEntity<DegreeDTO> update(@Valid @RequestBody DegreeDTO degreeDTO,@PathVariable UUID id)
             throws Exception {
         Degree degree = degreeMapper.mapOut(degreeDTO);
         Degree updatedDegree = degreeService.update(degree, id);
         return ResponseEntity.ok(degreeMapper.mapIn(updatedDegree));
     }
     @DeleteMapping(ID_IN_PATH)
-    public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) throws Exception {
         degreeService.delete(id);
         return  ResponseEntity.noContent().build();
     }
