@@ -12,6 +12,18 @@ public class ParentDTO {
 
     private UUID idParent;
 
+    private String affinity;
+
+    private String referenceNumber;
+
+    private String phone;
+
+    private String alternatePhone;
+
+    private String email;
+
+    private String relation;
+
     private String relationship;
 
     private String occupation;
