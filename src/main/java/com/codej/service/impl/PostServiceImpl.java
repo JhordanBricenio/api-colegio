@@ -2,10 +2,8 @@ package com.codej.service.impl;
 
 
 import com.codej.model.Setting;
-import com.codej.model.Tag;
 import com.codej.repository.IGenericRepository;
 import com.codej.repository.ISettingRepository;
-import com.codej.repository.ITagRepository;
 import com.codej.service.ISettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

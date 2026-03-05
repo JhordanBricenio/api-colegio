@@ -1,64 +1,43 @@
 package com.codej.model;
 
-import com.codej.emuns.StatusPayment;
-import com.codej.emuns.StatusRegistration;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
-@Data
-@Table(name = "Registration")
+@Table(name = "registrations")
+@EntityListeners(AuditingEntityListener.class)
 public class Registration {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID idRegistration;
 
-    @Temporal(TemporalType.DATE)
-    private Date fechaMatricula;
+    @Column(name = "status", nullable = false)
+    private boolean status;
 
-    @Temporal(TemporalType.DATE)
-    private Date fechaInicio;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
 
-    @Temporal(TemporalType.DATE)
-    private Date fechaFin;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "parent_id", nullable = false)
+    private Parent parent;
 
-    @Enumerated(EnumType.STRING)
-    private StatusRegistration statusRegistration; // Activo, Inactivo, Retirado
+    @CreatedDate
+    @Column(name = "created_at",updatable = false)
+    private LocalDateTime createdAt;
 
-    @Enumerated(EnumType.STRING)
-    private StatusPayment statusPayment; // Pagado, Pendiente, Parcial
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
-    private Double costo;
-    private Double descuento;
-
-    private String periodoAcademico;
-    private String turno;
-    private String seccion;
-    private String jornada;
-
-    @Column(nullable = false)
-    private String usuarioRegistro;
-    private String fechaModificacion;
-    private String comentarios;
-
-    @OneToOne
-    @JoinColumn(name = "degree_id")
-    private Degree degree;
-
-    @ManyToOne
-    @JoinColumn(name = "estudiante_id")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "apoderado_id")
-    private Apoderado apoderado;
-
-
-    @PrePersist
-    public void prePersist(){
-        this.fechaMatricula = new Date();
-        this.fechaInicio=new Date();
-    }
 }

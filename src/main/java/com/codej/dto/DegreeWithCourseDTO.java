@@ -16,8 +16,5 @@ public class DegreeWithCourseDTO {
     public DegreeWithCourseDTO(Integer idDegree, String name, List<Course> courses) {
         this.idDegree = idDegree;
         this.name = name;
-        this.courses = courses.stream()
-                .map(course -> new CourseDTO(course.getIdCourse(), course.getName(), course.getDescription()))
-                .collect(Collectors.toList());
     }
 }

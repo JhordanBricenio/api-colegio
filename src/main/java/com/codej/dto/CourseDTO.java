@@ -4,12 +4,22 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 public class CourseDTO {
 
-    private Integer idCourse;
+    private UUID idCourse;
+
     @NotNull
     private String name;
-    private String description;
+
+    @NotNull
+    private boolean status;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
 }

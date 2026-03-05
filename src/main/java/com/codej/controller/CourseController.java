@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.codej.constants.ApiConstants.*;
 
@@ -36,19 +37,19 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.CREATED).body(courseMapper.mapIn(savedCourse));
     }
     @GetMapping(ID_IN_PATH)
-    public ResponseEntity<CourseDTO> findById(@PathVariable Integer id) throws Exception {
+    public ResponseEntity<CourseDTO> findById(@PathVariable UUID id) throws Exception {
         return ResponseEntity.ok(courseMapper.mapIn(courseService.findById(id)));
     }
 
     @PutMapping(ID_IN_PATH)
-    public ResponseEntity<CourseDTO> update(@Valid @RequestBody CourseDTO courseDTO,@PathVariable Integer id)
+    public ResponseEntity<CourseDTO> update(@Valid @RequestBody CourseDTO courseDTO,@PathVariable UUID id)
             throws Exception {
         Course course = courseMapper.mapOut(courseDTO);
         Course updatedCourse = courseService.update(course, id);
         return ResponseEntity.ok(courseMapper.mapIn(updatedCourse));
     }
     @DeleteMapping(ID_IN_PATH)
-    public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) throws Exception {
         courseService.delete(id);
         return  ResponseEntity.noContent().build();
     }

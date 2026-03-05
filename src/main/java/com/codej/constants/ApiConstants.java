@@ -6,6 +6,9 @@ public final class ApiConstants {
 
     public static final String API_BASE = "/api";
     public static final String USER_BASE = API_BASE + "/users";
+    public static final String TEACHER_BASE = API_BASE + "/teachers";
+    public static final String STUDENT_BASE = API_BASE + "/students";
+    public static final String PARENT_BASE = API_BASE + "/parents";
     public static final String ROLE_BASE = API_BASE + "/roles";
     public static final String SETTING_BASE = API_BASE + "/settings";
     public static final String MANAGEMENT_BASE = API_BASE + "/managements";

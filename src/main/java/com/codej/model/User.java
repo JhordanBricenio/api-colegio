@@ -66,27 +66,6 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
- /*   @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Post> posts;
-
-    @JsonIgnoreProperties({"users","hibernateLazyInitializer", "handler"})
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "user_workshop",
-            joinColumns = @JoinColumn(name = "id_user", referencedColumnName = "idUser"),
-            inverseJoinColumns = @JoinColumn(name = "id_workshop", referencedColumnName = "idWorkshop")
-    )
-    private List<Workshop> workshops;
-
-    @JsonIgnoreProperties({"user","hibernateLazyInitializer", "handler"})
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Services> services;
-
-
-    @JsonIgnoreProperties({"user","hibernateLazyInitializer", "handler"})
-    @OneToMany(mappedBy = "user" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Assistance> assistance;*/
-
     @JsonIgnoreProperties({"users","hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rol_id", nullable = false)

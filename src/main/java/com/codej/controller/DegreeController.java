@@ -1,9 +1,7 @@
 package com.codej.controller;
 
 
-import com.codej.dto.DegreeCourseDTO;
 import com.codej.dto.DegreeDTO;
-import com.codej.dto.DegreeWithCourseDTO;
 import com.codej.mapper.DegreeMapper;
 import com.codej.model.Degree;
 import com.codej.service.IDegreeService;
@@ -16,7 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-import static com.codej.constants.ApiConstants.*;
+import static com.codej.constants.ApiConstants.DEGREE_BASE;
+import static com.codej.constants.ApiConstants.ID_IN_PATH;
 
 @RestController
 @RequestMapping(DEGREE_BASE)

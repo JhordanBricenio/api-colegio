@@ -1,9 +1,5 @@
 package com.codej.service.impl;
 
-import com.codej.dto.DegreeCourseDTO;
-import com.codej.dto.DegreeWithCourseDTO;
-import com.codej.exceptions.ResourceNotFoundException;
-import com.codej.model.Course;
 import com.codej.model.Degree;
 import com.codej.repository.IDegreeRepository;
 import com.codej.repository.IGenericRepository;
@@ -11,11 +7,7 @@ import com.codej.service.IDegreeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
-
-import static com.codej.constants.ErrorMessageConstants.NOT_RESULTS_FOUND_FOR_WITH_ID;
 
 @Service
 @RequiredArgsConstructor
