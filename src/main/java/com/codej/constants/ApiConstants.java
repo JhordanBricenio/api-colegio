@@ -19,6 +19,7 @@ public final class ApiConstants {
     public static final String ASSIGN_COURSE_TO_DEGREE = "/assign-course/{idDegree}";
     public static final String WORKSHOP_BASE = API_BASE + "/workshops";
     public static final String SERVICE_BASE = API_BASE + "/services";
+    public static final String REGISTRATION_BASE = API_BASE + "/registrations";
 
     public static final String ID_IN_PATH = "/{id}";
 
