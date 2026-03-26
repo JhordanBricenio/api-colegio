@@ -12,4 +12,6 @@ public interface IParentRepository extends IGenericRepository<Parent, UUID> {
     @Query("SELECT t FROM Parent t WHERE t.user.dni = :dni")
     Optional<Parent> findParentByDni(@Param("dni") String dni);
 
+    Optional<Parent> findFirstByStudent_IdStudent(UUID idStudent);
+
 }

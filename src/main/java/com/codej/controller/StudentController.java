@@ -2,9 +2,11 @@ package com.codej.controller;
 
 
 import com.codej.dto.DniRequest;
+import com.codej.dto.PaymentByStudentDTO;
 import com.codej.dto.StudentDTO;
 import com.codej.mapper.StudentMapper;
 import com.codej.model.Student;
+import com.codej.service.IPaymentService;
 import com.codej.service.IStudentService;
 import com.codej.service.IUserService;
 import jakarta.validation.Valid;
@@ -18,7 +20,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-import static com.codej.constants.ApiConstants.*;
+import static com.codej.constants.ApiConstants.ID_IN_PATH;
+import static com.codej.constants.ApiConstants.STUDENT_BASE;
+
 
 @RestController
 @RequestMapping(STUDENT_BASE)
@@ -28,11 +32,13 @@ public class StudentController {
     private final IStudentService studentService;
     private final IUserService userService;
     private final StudentMapper studentMapper;
+    private final IPaymentService paymentService;
 
-    StudentController(IStudentService studentService, StudentMapper studentMapper, IUserService userService) {
+    StudentController(IStudentService studentService, StudentMapper studentMapper, IUserService userService, IPaymentService paymentService) {
         this.userService = userService;
         this.studentService = studentService;
         this.studentMapper = studentMapper;
+        this.paymentService = paymentService;
     }
     @GetMapping
     public ResponseEntity< List<StudentDTO>> findAll() throws Exception {
@@ -82,6 +88,11 @@ public class StudentController {
        return userService.searchByDni(numero);
     }
 
+    @GetMapping(ID_IN_PATH + "/payments/paged/{page}")
+    public Page<PaymentByStudentDTO> getPaymentsByStudent(@PathVariable UUID id, @PathVariable Integer page) throws Exception {
+        Pageable pageable = PageRequest.of(page, 8);
+        return paymentService.findPaymentsByStudent(id, pageable);
+    }
 
 
 }

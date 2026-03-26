@@ -28,7 +28,7 @@ public class Registration {
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id", nullable = false)
     private Parent parent;
 

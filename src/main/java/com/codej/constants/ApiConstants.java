@@ -13,7 +13,8 @@ public final class ApiConstants {
     public static final String SETTING_BASE = API_BASE + "/settings";
     public static final String MANAGEMENT_BASE = API_BASE + "/managements";
     public static final String EDUCATION_LEVEL_BASE =API_BASE+ "/education-levels";
-    public static final String TAG_BASE = API_BASE + "/tags";
+    public static final String REGISTRATION_BASE = API_BASE + "/registrations";
+    public static final String PAYMENT_BASE = API_BASE + "/payments";
     public static final String DEGREE_BASE = API_BASE + "/degrees";
     public static final String COURSE_BASE = API_BASE + "/courses";
     public static final String ASSIGN_COURSE_TO_DEGREE = "/assign-course/{idDegree}";
