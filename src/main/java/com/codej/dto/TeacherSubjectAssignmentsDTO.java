@@ -1,0 +1,34 @@
+package com.codej.dto;
+
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Data
+@AllArgsConstructor
+public class TeacherSubjectAssignmentsDTO {
+
+    private UUID idTeacherSubjectAssignments;
+
+    @NotNull
+    private boolean status;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    @NotNull
+    private String teacherId;
+
+    @NotNull
+    private String educationLevelId;
+
+    @NotNull
+    private String degreeId;
+
+    @NotNull
+    private String courseId;
+}
