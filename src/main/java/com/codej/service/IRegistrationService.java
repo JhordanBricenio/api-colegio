@@ -1,6 +1,7 @@
 package com.codej.service;
 
 
+import com.codej.dto.KardexDTO;
 import com.codej.dto.RegistrationDetailDTO;
 import com.codej.model.Registration;
 import org.springframework.data.domain.Page;
@@ -19,4 +20,5 @@ public interface IRegistrationService extends ICRUDService<Registration, UUID> {
     Page<RegistrationDetailDTO> findAllWithDetails(Pageable pageable) throws Exception;
     RegistrationDetailDTO findDetailById(UUID id) throws Exception;
 
+    Page<KardexDTO> findKardexPaged(Pageable pageable) throws Exception;
 }

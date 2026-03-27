@@ -1,6 +1,7 @@
 package com.codej.controller;
 
 
+import com.codej.dto.KardexDTO;
 import com.codej.dto.RegistrationDTO;
 import com.codej.dto.RegistrationDetailDTO;
 import com.codej.mapper.RegistrationMapper;
@@ -49,6 +50,12 @@ public class RegistrationController {
     public Page< RegistrationDetailDTO> findAllDetailsPaged(@PathVariable Integer page) throws Exception {
         Pageable pageable = PageRequest.of(page, 8);
         return registrationService.findAllWithDetails(pageable);
+    }
+
+    @GetMapping("/kardex/paged/{page}")
+    public Page<KardexDTO> findKardexPaged(@PathVariable Integer page) throws Exception {
+        Pageable pageable = PageRequest.of(page, 8);
+        return registrationService.findKardexPaged(pageable);
     }
 
     @PostMapping
