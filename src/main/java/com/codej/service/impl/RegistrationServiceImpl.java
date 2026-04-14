@@ -8,9 +8,11 @@ import com.codej.repository.IRegistrationRepository;
 import com.codej.service.IRegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -44,6 +46,20 @@ public class RegistrationServiceImpl extends CRUDGenericImpl<Registration, UUID>
     @Override
     public RegistrationDetailDTO findDetailById(UUID id) throws Exception {
         return userRepository.findDetailById(id);
+    }
+
+    @Override
+    public Page<Object[]> findKardexPaged(Pageable pageable) throws Exception {
+        return findKardexPaged(pageable, null);
+    }
+
+    @Override
+    public Page<Object[]> findKardexPaged(Pageable pageable, String studentDni) throws Exception {
+        int limit = pageable.getPageSize();
+        int offset = (int) pageable.getOffset();
+        List<Object[]> rows = userRepository.findKardexNative(limit, offset, studentDni);
+        long total = userRepository.countKardex(studentDni);
+        return new PageImpl<>(rows, pageable, total);
     }
 
 }

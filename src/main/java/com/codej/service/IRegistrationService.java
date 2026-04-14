@@ -19,4 +19,10 @@ public interface IRegistrationService extends ICRUDService<Registration, UUID> {
     Page<RegistrationDetailDTO> findAllWithDetails(Pageable pageable) throws Exception;
     RegistrationDetailDTO findDetailById(UUID id) throws Exception;
 
+    // --- new kardex method ---
+    Page<Object[]> findKardexPaged(Pageable pageable) throws Exception;
+
+    // --- new: kardex with optional DNI filter ---
+    Page<Object[]> findKardexPaged(Pageable pageable, String studentDni) throws Exception;
+
 }

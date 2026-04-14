@@ -3,17 +3,18 @@ package com.codej.dto;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class TeacherSubjectAssignmentsDTO {
 
     private UUID idTeacherSubjectAssignments;
 
-    @NotNull
     private boolean status;
 
     private LocalDateTime createdAt;
@@ -23,12 +24,9 @@ public class TeacherSubjectAssignmentsDTO {
     @NotNull
     private String teacherId;
 
-    @NotNull
     private String educationLevelId;
 
-    @NotNull
     private String degreeId;
 
-    @NotNull
     private String courseId;
 }

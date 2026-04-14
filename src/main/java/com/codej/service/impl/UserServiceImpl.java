@@ -19,6 +19,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.UUID;
 
@@ -29,6 +30,7 @@ public class UserServiceImpl extends CRUDGenericImpl<User, UUID> implements IUse
 
     private final IUserRepository userRepository;
     private final IRoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Value("${apis.token}")
     private  String apiToken;
@@ -49,6 +51,10 @@ public class UserServiceImpl extends CRUDGenericImpl<User, UUID> implements IUse
         }
         if (userRepository.existsByDni(user.getDni())) {
             throw new DuplicateResourceException(User.class.getSimpleName(), "dni", user.getDni());
+        }
+        // encode password before saving
+        if (user.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
         return userRepository.save(user);
     }

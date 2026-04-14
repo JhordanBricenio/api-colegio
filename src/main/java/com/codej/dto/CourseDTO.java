@@ -22,4 +22,6 @@ public class CourseDTO {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    private String educationLevelId;
 }

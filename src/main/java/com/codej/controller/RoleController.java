@@ -18,7 +18,6 @@ import static com.codej.constants.ApiConstants.ROLE_BASE;
 
 @RestController
 @RequestMapping(ROLE_BASE)
-@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class RoleController {
     
@@ -38,9 +37,6 @@ public class RoleController {
     @PostMapping
     public ResponseEntity<RoleDTO> save(@Valid @RequestBody RoleDTO roleDTO) throws Exception {
         Role role= roleMapper.mapOut(roleDTO);
-        if (role.getName() != null) {
-            role.setName(role.getName().toUpperCase());
-        }
         Role savedRole = roleService.save(role);
         return ResponseEntity.status(HttpStatus.CREATED).body(roleMapper.mapIn(savedRole));
     }

@@ -33,4 +33,8 @@ public class Course {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "education_level_id")
+    private EducationLevel educationLevel;
+
 }

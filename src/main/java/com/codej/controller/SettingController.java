@@ -18,7 +18,6 @@ import static com.codej.constants.ApiConstants.*;
 
 @RestController
 @RequestMapping(SETTING_BASE)
-@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class SettingController {
 

@@ -19,7 +19,6 @@ import static com.codej.constants.ApiConstants.ID_IN_PATH;
 
 @RestController
 @RequestMapping(DEGREE_BASE)
-@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class DegreeController {
 

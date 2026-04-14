@@ -38,15 +38,14 @@ public class TeacherSubjectAssignments {
     private Teacher teacher;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "educationLevel_id", nullable = false)
+    @JoinColumn(name = "educationLevel_id", nullable = true)
     private EducationLevel educationLevel;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "degree_id", nullable = false)
+    @JoinColumn(name = "degree_id", nullable = true)
     private Degree degree;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id", nullable = false)
+    @JoinColumn(name = "course_id", nullable = true)
     private Course course;
-
 }

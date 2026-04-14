@@ -8,6 +8,7 @@ import com.codej.model.Parent;
 import com.codej.service.IParentService;
 import com.codej.service.IUserService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,18 +23,13 @@ import static com.codej.constants.ApiConstants.*;
 
 @RestController
 @RequestMapping(PARENT_BASE)
-@CrossOrigin(origins = "http://localhost:4200")
+@RequiredArgsConstructor
 public class ParentController {
 
     private final IParentService parentService;
-    private final IUserService userService;
     private final ParentMapper parentMapper;
+    private final IUserService userService;
 
-    ParentController(IParentService parentService, ParentMapper parentMapper, IUserService userService) {
-        this.userService = userService;
-        this.parentService = parentService;
-        this.parentMapper = parentMapper;
-    }
     @GetMapping
     public ResponseEntity< List<ParentDTO>> findAll() throws Exception {
         parentMapper.toParentDTOList(parentService.findAll());

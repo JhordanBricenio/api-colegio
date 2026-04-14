@@ -7,9 +7,12 @@ import com.codej.dto.StudentDTO;
 import com.codej.mapper.StudentMapper;
 import com.codej.model.Student;
 import com.codej.service.IPaymentService;
+import com.codej.service.IStudentKardexService;
 import com.codej.service.IStudentService;
 import com.codej.service.IUserService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,20 +29,17 @@ import static com.codej.constants.ApiConstants.STUDENT_BASE;
 
 @RestController
 @RequestMapping(STUDENT_BASE)
-@CrossOrigin(origins = "http://localhost:4200")
+@RequiredArgsConstructor
 public class StudentController {
 
     private final IStudentService studentService;
-    private final IUserService userService;
     private final StudentMapper studentMapper;
     private final IPaymentService paymentService;
+    private final IUserService userService;
 
-    StudentController(IStudentService studentService, StudentMapper studentMapper, IUserService userService, IPaymentService paymentService) {
-        this.userService = userService;
-        this.studentService = studentService;
-        this.studentMapper = studentMapper;
-        this.paymentService = paymentService;
-    }
+    @Autowired(required = false)
+    private IStudentKardexService studentKardexService;
+
     @GetMapping
     public ResponseEntity< List<StudentDTO>> findAll() throws Exception {
         studentMapper.toStudentDTOList(studentService.findAll());
@@ -92,6 +92,22 @@ public class StudentController {
     public Page<PaymentByStudentDTO> getPaymentsByStudent(@PathVariable UUID id, @PathVariable Integer page) throws Exception {
         Pageable pageable = PageRequest.of(page, 8);
         return paymentService.findPaymentsByStudent(id, pageable);
+    }
+
+    @GetMapping(ID_IN_PATH + "/kardex-professional")
+    public ResponseEntity<?> getKardexByStudentId(@PathVariable UUID id) throws Exception {
+        if (studentKardexService == null) {
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body("Kardex service not available");
+        }
+        return ResponseEntity.ok(studentKardexService.getKardexByStudentId(id));
+    }
+
+    @GetMapping("/kardex-by-dni")
+    public ResponseEntity<?> getKardexByDni(@RequestParam String dni) throws Exception {
+        if (studentKardexService == null) {
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body("Kardex service not available");
+        }
+        return ResponseEntity.ok(studentKardexService.getKardexByStudentDni(dni));
     }
 
 

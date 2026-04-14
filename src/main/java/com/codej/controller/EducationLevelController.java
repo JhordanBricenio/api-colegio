@@ -18,7 +18,6 @@ import static com.codej.constants.ApiConstants.EDUCATION_LEVEL_BASE;
 
 @RestController
 @RequestMapping(EDUCATION_LEVEL_BASE)
-@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class EducationLevelController {
     

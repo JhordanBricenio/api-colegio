@@ -7,6 +7,9 @@ import com.codej.model.Course;
 import com.codej.service.ICourseService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +21,6 @@ import static com.codej.constants.ApiConstants.*;
 
 @RestController
 @RequestMapping(COURSE_BASE)
-@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class CourseController {
 
@@ -30,6 +32,15 @@ public class CourseController {
     public ResponseEntity< List<CourseDTO>> findAll() throws Exception {
         return ResponseEntity.ok(courseMapper.mapIn(courseService.findAll()));
     }
+
+    @GetMapping("/paged/{page}")
+    public Page<CourseDTO> findAllPaged(@PathVariable Integer page, @RequestParam(required = false) String educationLevelId) throws Exception {
+        Pageable pageable = PageRequest.of(page, 8);
+        UUID eduId = (educationLevelId == null) ? null : UUID.fromString(educationLevelId);
+        Page<Course> coursePage = courseService.findAllPaged(pageable, eduId);
+        return coursePage.map(courseMapper::mapIn);
+    }
+
     @PostMapping
     public ResponseEntity<CourseDTO> save(@Valid @RequestBody CourseDTO courseDTO) throws Exception {
         Course course= courseMapper.mapOut(courseDTO);

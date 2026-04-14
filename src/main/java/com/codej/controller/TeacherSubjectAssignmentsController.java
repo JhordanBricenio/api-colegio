@@ -6,6 +6,8 @@ import com.codej.mapper.TeacherSubjectAssignmentsMapper;
 import com.codej.model.TeacherSubjectAssignments;
 import com.codej.service.ITeacherSubjectAssignmentsService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +21,7 @@ import static com.codej.constants.ApiConstants.TEACHER_ASSIGNMENTS;
 
 @RestController
 @RequestMapping(TEACHER_ASSIGNMENTS)
-@CrossOrigin(origins = "http://localhost:4200")
+@Slf4j
 public class TeacherSubjectAssignmentsController {
 
     private final ITeacherSubjectAssignmentsService teacherSubjectAssignmentsService;
@@ -37,7 +39,23 @@ public class TeacherSubjectAssignmentsController {
 
     @PostMapping
     public ResponseEntity<TeacherSubjectAssignmentsDTO> save(@Valid @RequestBody TeacherSubjectAssignmentsDTO teacherSubjectAssignmentsDTO) throws Exception {
+        log.info("POST /teacher-assignments payload: {}", teacherSubjectAssignmentsDTO);
         TeacherSubjectAssignments teacherSubjectAssignments= teacherSubjectAssignmentsMapper.mapOut(teacherSubjectAssignmentsDTO);
+        // Limpieza defensiva: si front envió objetos anidados vacíos, eliminarlos para evitar transient errors
+        if (teacherSubjectAssignments.getCourse() != null && teacherSubjectAssignments.getCourse().getIdCourse() == null) {
+            teacherSubjectAssignments.setCourse(null);
+        }
+        if (teacherSubjectAssignments.getDegree() != null && teacherSubjectAssignments.getDegree().getIdDegree() == null) {
+            teacherSubjectAssignments.setDegree(null);
+        }
+        if (teacherSubjectAssignments.getEducationLevel() != null && teacherSubjectAssignments.getEducationLevel().getIdEducationLevel() == null) {
+            teacherSubjectAssignments.setEducationLevel(null);
+        }
+        log.info("Mapped entity before save: teacher={}, degree={}, course={}",
+                teacherSubjectAssignments.getTeacher()!=null?teacherSubjectAssignments.getTeacher().getIdTeacher():null,
+                teacherSubjectAssignments.getDegree()!=null?teacherSubjectAssignments.getDegree().getIdDegree():null,
+                teacherSubjectAssignments.getCourse()!=null?teacherSubjectAssignments.getCourse().getIdCourse():null
+        );
         TeacherSubjectAssignments savedTeacherSubjectAssignments = teacherSubjectAssignmentsService.save(teacherSubjectAssignments);
         return ResponseEntity.status(HttpStatus.CREATED).body(teacherSubjectAssignmentsMapper.mapIn(savedTeacherSubjectAssignments));
     }
@@ -49,7 +67,18 @@ public class TeacherSubjectAssignmentsController {
 
     @PatchMapping(ID_IN_PATH)
     public ResponseEntity<TeacherSubjectAssignmentsDTO> update(@Valid @RequestBody TeacherSubjectAssignmentsDTO teacherSubjectAssignmentsDTO,@PathVariable UUID id) throws Exception {
+        log.info("PATCH /teacher-assignments/{} payload: {}", id, teacherSubjectAssignmentsDTO);
         TeacherSubjectAssignments teacherSubjectAssignments = teacherSubjectAssignmentsMapper.mapOut(teacherSubjectAssignmentsDTO);
+        // Limpieza defensiva también en update
+        if (teacherSubjectAssignments.getCourse() != null && teacherSubjectAssignments.getCourse().getIdCourse() == null) {
+            teacherSubjectAssignments.setCourse(null);
+        }
+        if (teacherSubjectAssignments.getDegree() != null && teacherSubjectAssignments.getDegree().getIdDegree() == null) {
+            teacherSubjectAssignments.setDegree(null);
+        }
+        if (teacherSubjectAssignments.getEducationLevel() != null && teacherSubjectAssignments.getEducationLevel().getIdEducationLevel() == null) {
+            teacherSubjectAssignments.setEducationLevel(null);
+        }
         TeacherSubjectAssignments updatedTeacherSubjectAssignments = teacherSubjectAssignmentsService.update(teacherSubjectAssignments, id);
         return ResponseEntity.ok(teacherSubjectAssignmentsMapper.mapIn(updatedTeacherSubjectAssignments));
     }

@@ -23,6 +23,8 @@ public class StudentServiceImpl extends CRUDGenericImpl<Student, UUID> implement
 
     private final IStudentRepository studentRepository;
     private final IRoleRepository roleRepository;
+    private final com.codej.repository.IDegreeRepository degreeRepository;
+    private final com.codej.repository.IEducationLevelRepository educationLevelRepository;
 
     @Value("${apis.token}")
     private  String apiToken;
@@ -38,7 +40,52 @@ public class StudentServiceImpl extends CRUDGenericImpl<Student, UUID> implement
         Role role = roleRepository.findById(student.getUser().getRole().getIdRole())
                 .orElseThrow(() -> new ResourceNotFoundException("No se encontró el rol con id: " + student.getUser().getRole().getIdRole()));
         student.getUser().setRole(role);
+
+        // Attach Degree if present
+        if (student.getDegree() != null && student.getDegree().getIdDegree() != null) {
+            UUID degreeId = student.getDegree().getIdDegree();
+            var degree = degreeRepository.findById(degreeId)
+                    .orElseThrow(() -> new ResourceNotFoundException("No se encontró el grado con id: " + degreeId));
+            student.setDegree(degree);
+        }
+
+        // Attach EducationLevel if present
+        if (student.getEducationLevel() != null && student.getEducationLevel().getIdEducationLevel() != null) {
+            UUID eduId = student.getEducationLevel().getIdEducationLevel();
+            var edu = educationLevelRepository.findById(eduId)
+                    .orElseThrow(() -> new ResourceNotFoundException("No se encontró el nivel educativo con id: " + eduId));
+            student.setEducationLevel(edu);
+        }
         return studentRepository.save(student);
+    }
+
+    @Override
+    public Student update(Student student, UUID id) throws Exception {
+        // Ensure target exists (CRUDGenericImpl.update already checks), but attach nested entities before calling super
+        // Attach Role if present
+        if (student.getUser() != null && student.getUser().getRole() != null && student.getUser().getRole().getIdRole() != null) {
+            Role role = roleRepository.findById(student.getUser().getRole().getIdRole())
+                    .orElseThrow(() -> new ResourceNotFoundException("No se encontró el rol con id: " + student.getUser().getRole().getIdRole()));
+            student.getUser().setRole(role);
+        }
+
+        // Attach Degree if present
+        if (student.getDegree() != null && student.getDegree().getIdDegree() != null) {
+            UUID degreeId = student.getDegree().getIdDegree();
+            var degree = degreeRepository.findById(degreeId)
+                    .orElseThrow(() -> new ResourceNotFoundException("No se encontró el grado con id: " + degreeId));
+            student.setDegree(degree);
+        }
+
+        // Attach EducationLevel if present
+        if (student.getEducationLevel() != null && student.getEducationLevel().getIdEducationLevel() != null) {
+            UUID eduId = student.getEducationLevel().getIdEducationLevel();
+            var edu = educationLevelRepository.findById(eduId)
+                    .orElseThrow(() -> new ResourceNotFoundException("No se encontró el nivel educativo con id: " + eduId));
+            student.setEducationLevel(edu);
+        }
+
+        return super.update(student, id);
     }
 
     @Override

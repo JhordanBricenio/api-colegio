@@ -1,6 +1,7 @@
 package com.codej.model;
 
 import com.codej.emuns.Shift;
+import com.codej.emuns.EducationLevelType;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
@@ -27,6 +28,10 @@ public class EducationLevel {
     @Column(name = "shift", nullable = false)
     private Shift shift;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "level_type", nullable = false)
+    private EducationLevelType levelType;
+
     @Column(name = "status", nullable = false)
     private boolean status;
 
@@ -41,5 +46,20 @@ public class EducationLevel {
     @ManyToOne
     @JoinColumn(name = "management_id", nullable = false)
     private Management management;
+
+    @PrePersist
+    public void prePersist(){
+        if (this.levelType == null) {
+            if (this.name != null) {
+                String n = this.name.trim().toUpperCase();
+                if (n.contains("INICIAL")) this.levelType = EducationLevelType.INITIAL;
+                else if (n.contains("PRIMARIA")) this.levelType = EducationLevelType.PRIMARY;
+                else if (n.contains("SECUNDARIA")) this.levelType = EducationLevelType.SECONDARY;
+                else this.levelType = EducationLevelType.OTHER;
+            } else {
+                this.levelType = EducationLevelType.OTHER;
+            }
+        }
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.codej.model;
 
+import com.codej.emuns.RoleName;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,7 +17,8 @@ public class Role {
     private UUID idRole;
 
     @Column(name = "name", length = 50, nullable = false, unique = true)
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private RoleName name;
 
     @Column(name = "description", length = 100)
     private String description;

@@ -1,5 +1,6 @@
 package com.codej.dto;
 
+import com.codej.emuns.RoleName;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +15,7 @@ public class RoleDTO {
     private UUID idRole;
 
     @NotNull
-    private String name;
+    private RoleName name;
 
     private String description;
 

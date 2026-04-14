@@ -7,6 +7,7 @@ import com.codej.mapper.UserMapper;
 import com.codej.model.User;
 import com.codej.service.IUserService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,16 +23,12 @@ import static com.codej.constants.ApiConstants.USER_BASE;
 
 @RestController
 @RequestMapping(USER_BASE)
-@CrossOrigin(origins = "http://localhost:4200")
+@RequiredArgsConstructor
 public class UserController {
 
     private final IUserService userService;
     private final UserMapper userMapper;
 
-    UserController(IUserService userService, UserMapper userMapper) {
-        this.userService = userService;
-        this.userMapper = userMapper;
-    }
     @GetMapping
     public ResponseEntity< List<UserDTO>> findAll() throws Exception {
         userMapper.toUserDTOList(userService.findAll());

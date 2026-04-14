@@ -19,7 +19,6 @@ import static com.codej.constants.ApiConstants.PAYMENT_BASE;
 
 @RestController
 @RequestMapping(PAYMENT_BASE)
-@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class PaymentController {
 

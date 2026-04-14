@@ -3,11 +3,15 @@ package com.codej.controller;
 
 import com.codej.dto.DniRequest;
 import com.codej.dto.TeacherDTO;
+import com.codej.dto.TeacherSubjectAssignmentsDTO;
 import com.codej.mapper.TeacherMapper;
+import com.codej.mapper.TeacherSubjectAssignmentsMapper;
 import com.codej.model.Teacher;
 import com.codej.service.ITeacherService;
+import com.codej.service.ITeacherSubjectAssignmentsService;
 import com.codej.service.IUserService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,18 +28,15 @@ import static com.codej.constants.ApiConstants.TEACHER_BASE;
 
 @RestController
 @RequestMapping(TEACHER_BASE)
-@CrossOrigin(origins = "http://localhost:4200")
+@RequiredArgsConstructor
 public class TeacherController {
 
     private final ITeacherService teacherService;
-    private final IUserService userService;
     private final TeacherMapper teacherMapper;
+    private final IUserService userService;
+    private final ITeacherSubjectAssignmentsService teacherSubjectAssignmentsService;
+    private final TeacherSubjectAssignmentsMapper teacherSubjectAssignmentsMapper;
 
-    TeacherController(ITeacherService teacherService, TeacherMapper teacherMapper, IUserService userService) {
-        this.userService = userService;
-        this.teacherService = teacherService;
-        this.teacherMapper = teacherMapper;
-    }
     @GetMapping
     public ResponseEntity< List<TeacherDTO>> findAll() throws Exception {
         teacherMapper.toTeacherDTOList(teacherService.findAll());
@@ -60,6 +61,14 @@ public class TeacherController {
     public ResponseEntity<TeacherDTO> findById(@PathVariable UUID id) throws Exception {
         return ResponseEntity.ok(teacherMapper.toTeacherDTO(teacherService.findById(id)));
     }
+
+    // NEW: devolver asignaciones enriquecidas del docente
+    @GetMapping(ID_IN_PATH + "/assignments")
+    public ResponseEntity<List<TeacherSubjectAssignmentsDTO>> getAssignments(@PathVariable UUID id) throws Exception {
+        List<TeacherSubjectAssignmentsDTO> dtoList = teacherSubjectAssignmentsMapper.mapIn(teacherSubjectAssignmentsService.findByTeacher(id));
+        return ResponseEntity.ok(dtoList);
+    }
+
     @PostMapping("/dni")
     public ResponseEntity<TeacherDTO> findByDni(@RequestBody DniRequest dniRequest) throws Exception {
         return ResponseEntity.ok(teacherMapper.toTeacherDTO(teacherService.findByDni(dniRequest.getDni())));
@@ -78,11 +87,11 @@ public class TeacherController {
         return  ResponseEntity.noContent().build();
     }
 
+
     @GetMapping("/dni/{numero}")
     public ResponseEntity<String> searchByDni(@PathVariable String numero) throws Exception {
        return userService.searchByDni(numero);
     }
-
 
 
 }
