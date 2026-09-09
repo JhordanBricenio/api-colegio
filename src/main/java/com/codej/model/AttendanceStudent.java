@@ -4,6 +4,9 @@ import com.codej.emuns.StatusAttendance;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,6 +18,7 @@ import java.util.UUID;
 @Table(name = "attendances_student", uniqueConstraints = {
         @UniqueConstraint(name = "uk_student_date_session", columnNames = {"student_id", "attendance_date", "session"})
 })
+@EntityListeners(AuditingEntityListener.class)
 public class AttendanceStudent {
 
     @Id
@@ -54,10 +58,12 @@ public class AttendanceStudent {
     @JoinColumn(name = "degree_id")
     private Degree degree;
 
+    @CreatedDate
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 
     @Column(name = "created_by")

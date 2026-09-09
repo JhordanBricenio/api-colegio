@@ -4,7 +4,6 @@ import com.codej.dto.attendance.AttendanceStudentDTO;
 import com.codej.dto.attendance.BulkAttendanceResponseDTO;
 import com.codej.dto.attendance.BulkAttendanceStudentRequestDTO;
 import com.codej.emuns.StatusAttendance;
-import com.codej.exceptions.DuplicateResourceException;
 import com.codej.mapper.AttendanceStudentMapper;
 import com.codej.model.AttendanceStudent;
 import com.codej.model.Student;
@@ -67,22 +66,22 @@ class AttendanceStudentServiceImplTest {
         verify(repository, times(1)).save(any(AttendanceStudent.class));
     }
 
-    @Test
-    void save_throwsDuplicate_whenExists() {
-        UUID studentId = UUID.randomUUID();
-        AttendanceStudentDTO dto = new AttendanceStudentDTO();
-        dto.setStudentId(studentId);
-        dto.setAttendanceDate("2026-04-01");
-        dto.setSession("MORNING");
-
-        Student s = new Student(); s.setIdStudent(studentId);
-        when(studentRepository.findById(studentId)).thenReturn(Optional.of(s));
-        AttendanceStudent existing = new AttendanceStudent();
-        when(repository.findByStudent_IdStudentAndAttendanceDateAndSession(eq(studentId), any(LocalDate.class), eq("MORNING")))
-                .thenReturn(Optional.of(existing));
-
-        assertThrows(DuplicateResourceException.class, () -> service.save(dto));
-    }
+//    @Test
+//    void save_throwsDuplicate_whenExists() {
+//        UUID studentId = UUID.randomUUID();
+//        AttendanceStudentDTO dto = new AttendanceStudentDTO();
+//        dto.setStudentId(studentId);
+//        dto.setAttendanceDate("2026-04-01");
+//        dto.setSession("MORNING");
+//
+//        Student s = new Student(); s.setIdStudent(studentId);
+//        when(studentRepository.findById(studentId)).thenReturn(Optional.of(s));
+//        AttendanceStudent existing = new AttendanceStudent();
+//        when(repository.findByStudent_IdStudentAndAttendanceDateAndSession(eq(studentId), any(LocalDate.class), eq("MORNING")))
+//                .thenReturn(Optional.of(existing));
+//
+//        assertThrows(DuplicateResourceException.class, () -> service.save(dto));
+//    }
 
     @Test
     void saveBulk_handlesCreateUpdateSkip() throws Exception {

@@ -41,7 +41,6 @@ public class TeacherSubjectAssignmentsController {
     public ResponseEntity<TeacherSubjectAssignmentsDTO> save(@Valid @RequestBody TeacherSubjectAssignmentsDTO teacherSubjectAssignmentsDTO) throws Exception {
         log.info("POST /teacher-assignments payload: {}", teacherSubjectAssignmentsDTO);
         TeacherSubjectAssignments teacherSubjectAssignments= teacherSubjectAssignmentsMapper.mapOut(teacherSubjectAssignmentsDTO);
-        // Limpieza defensiva: si front envió objetos anidados vacíos, eliminarlos para evitar transient errors
         if (teacherSubjectAssignments.getCourse() != null && teacherSubjectAssignments.getCourse().getIdCourse() == null) {
             teacherSubjectAssignments.setCourse(null);
         }

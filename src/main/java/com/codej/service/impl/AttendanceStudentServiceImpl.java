@@ -50,8 +50,23 @@ public class AttendanceStudentServiceImpl implements IAttendanceStudentService {
 
         Optional<AttendanceStudent> existing = repository.findByStudent_IdStudentAndAttendanceDateAndSession(student.getIdStudent(), date, dto.getSession());
         if (existing.isPresent()) {
-            throw new DuplicateResourceException("AttendanceStudent", "studentId+attendanceDate+session",
-                    String.format("%s+%s+%s", student.getIdStudent(), date, dto.getSession()));
+            // Actualizar el registro existente en lugar de lanzar excepción
+            AttendanceStudent entity = existing.get();
+            if (dto.getStatus() != null) entity.setStatus(StatusAttendance.valueOf(dto.getStatus().name()));
+            if (dto.getMinutesLate() != null) entity.setMinutesLate(dto.getMinutesLate());
+            if (StringUtils.hasText(dto.getJustification())) entity.setJustification(dto.getJustification());
+            if (StringUtils.hasText(dto.getSource())) entity.setSource(dto.getSource());
+            if (dto.getCourseId() != null) {
+                Course c = entityManager.getReference(Course.class, dto.getCourseId());
+                entity.setCourse(c);
+            }
+            if (dto.getDegreeId() != null) {
+                Degree d = entityManager.getReference(Degree.class, dto.getDegreeId());
+                entity.setDegree(d);
+            }
+            entity.setUpdatedAt(java.time.LocalDateTime.now());
+            repository.save(entity);
+            return mapper.toDTO(entity);
         }
 
         AttendanceStudent entity = new AttendanceStudent();
@@ -82,7 +97,7 @@ public class AttendanceStudentServiceImpl implements IAttendanceStudentService {
     @Override
     public AttendanceStudentDTO update(UUID id, AttendanceStudentDTO dto) throws Exception {
         AttendanceStudent entity = repository.findById(id).orElseThrow(() -> new NoSuchElementException("Attendance not found"));
-        if (StringUtils.hasText(dto.getStatus().name())) entity.setStatus(StatusAttendance.valueOf(dto.getStatus().name()));
+        if (dto.getStatus() != null && StringUtils.hasText(dto.getStatus().name())) entity.setStatus(StatusAttendance.valueOf(dto.getStatus().name()));
         if (dto.getMinutesLate() != null) entity.setMinutesLate(dto.getMinutesLate());
         if (StringUtils.hasText(dto.getJustification())) entity.setJustification(dto.getJustification());
         if (StringUtils.hasText(dto.getSource())) entity.setSource(dto.getSource());
